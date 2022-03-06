@@ -17,7 +17,7 @@ type Props = {
 };
 const AnswerRow: VFC<Props> = ({ result, onClickCell, cellProps }) => {
   return (
-    <Grid container spacing={0.5}>
+    <Grid container spacing={0.5} justifyContent={'center'}>
       {(result?.statuses || [...Array(TARGET_NAME_LEN)].fill(null)).map(
         (status, index) => {
           const character = result?.input.charAt(index) || '';

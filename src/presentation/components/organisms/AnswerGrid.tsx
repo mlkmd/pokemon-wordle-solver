@@ -20,7 +20,7 @@ const AnswerGrid: VFC<Props> = ({ results, cellOnClick, rowProps }) => {
   ].slice(0, ROW_COUNT);
 
   return (
-    <Grid container spacing={0.5}>
+    <Grid container spacing={0.5} justifyContent={'center'}>
       {paddedResults.map((result, index) => {
         return (
           <Grid key={index} item xs={12}>
