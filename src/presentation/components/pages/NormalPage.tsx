@@ -51,6 +51,7 @@ const NormalPage: NextPage<Props> = (props) => {
         setCellSize(newCellSize);
       }
     };
+    listener();
     window.addEventListener('resize', listener);
     return () => {
       window.removeEventListener('resize', listener);
