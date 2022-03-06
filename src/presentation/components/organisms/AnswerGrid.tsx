@@ -8,10 +8,12 @@ const ROW_COUNT = 5;
 type Props = {
   /** 回答結果 */
   results: SolveResult[];
+  /** セルクリック */
+  cellOnClick?: (resultIndex: number, cellIndex: number) => void;
   /** 列 Props */
-  rowProps: Omit<ComponentProps<typeof AnswerRow>, 'result'>;
+  rowProps: Omit<ComponentProps<typeof AnswerRow>, 'result' | 'onClickCell'>;
 };
-const AnswerGrid: VFC<Props> = ({ results, rowProps }) => {
+const AnswerGrid: VFC<Props> = ({ results, cellOnClick, rowProps }) => {
   const paddedResults: (null | SolveResult)[] = [
     ...results,
     ...[...Array(ROW_COUNT)].fill(null),
@@ -19,10 +21,18 @@ const AnswerGrid: VFC<Props> = ({ results, rowProps }) => {
 
   return (
     <Grid container spacing={0.5}>
-      {paddedResults.map((result) => {
+      {paddedResults.map((result, index) => {
         return (
-          <Grid item xs={12}>
-            <AnswerRow result={result} {...rowProps} />
+          <Grid key={index} item xs={12}>
+            <AnswerRow
+              result={result}
+              onClickCell={
+                result !== null && typeof cellOnClick === 'function'
+                  ? (cellIndex) => cellOnClick(index, cellIndex)
+                  : undefined
+              }
+              {...rowProps}
+            />
           </Grid>
         );
       })}

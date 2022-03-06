@@ -2,6 +2,8 @@ import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import AnswerCell from 'presentation/components/atoms/AnswerCell';
 import { BLOW, HIT, UNUSED } from 'application/query/value/CharacterStatus';
+import emptyFunction from 'lib/functions/emptyFunction';
+import clickCheckFunction from 'lib/functions/clickCheckFunction';
 
 export default {
   title: 'custom/atoms/AnswerCell',
@@ -35,4 +37,11 @@ Blow.args = {
   character: 'ア',
   status: BLOW,
   size: 40,
+};
+export const Clickable = Template.bind({});
+Clickable.args = {
+  character: 'ア',
+  status: HIT,
+  size: 40,
+  onClick: () => clickCheckFunction(`AnswerCell`),
 };
