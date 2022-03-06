@@ -1,0 +1,47 @@
+// https://prograshi.com/design/css/media-query-in-sass/
+$sizes: xl, lg, md, sm, xs;
+
+// responsive
+$breakpoint-up: (
+        'xs': 'screen and (min-width: 321px)',
+        'sm': 'screen and (min-width: 376px)',
+        'md': 'screen and (min-width: 501px)',
+        'lg': 'screen and (min-width: 961px)',
+        'xl': 'screen and (min-width: 1201px)',
+) !default;
+
+// max-width
+$breakpoint-down: (
+        'xs': 'screen and (max-width: 320px)',
+        'sm': 'screen and (max-width: 375px)',
+        'md': 'screen and (max-width: 500px)',
+        'lg': 'screen and (max-width: 960px)',
+        'xl': 'screen and (max-width: 1200px)',
+) !default;
+
+$breakpoint-range: (
+        'xs': 'screen and (min-width: 0px) and (max-width: 320px)',
+        'sm': 'screen and (min-width: 321px) and (max-width: 375px)',
+        'md': 'screen and (min-width: 376px) and (max-width: 500px)',
+        'lg': 'screen and (min-width: 501px) and (max-width: 960px)',
+        'xl': 'screen and (min-width: 961px) and (max-width: 1200px)',
+) !default;
+
+// @mixinの定義
+@mixin mq-up($size: md) {
+  @media #{map-get($breakpoint-up, $size)} {
+    @content;
+  }
+}
+
+@mixin mq-down($size: md) {
+  @media #{map-get($breakpoint-down, $size)} {
+    @content;
+  }
+}
+
+@mixin mq-range($size: md) {
+  @media #{map-get($breakpoint-range, $size)} {
+    @content;
+  }
+}

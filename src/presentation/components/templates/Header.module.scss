@@ -1,0 +1,29 @@
+@use 'src/styles/var';
+
+.header {
+  background: var.$color-bg-header;
+  text-align: center;
+}
+
+.titleContainer {
+  position: relative;
+  padding: 0.25rem;
+
+  .homeIcon {
+    position: absolute;
+    font-size: 2.4rem;
+    top: 1.0rem;
+    right: 0.5em;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .mainTitle {
+    font-size: 2.4rem;
+  }
+
+  .subTitle {
+    font-size: 1.6rem;
+  }
+}
