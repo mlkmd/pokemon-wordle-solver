@@ -2,9 +2,14 @@ import Style from 'presentation/components/pages/NormalPageView.module.scss';
 import WidthManager from 'presentation/components/atoms/WidthManager';
 import { ComponentProps, VFC } from 'react';
 import AnswerGrid from 'presentation/components/organisms/AnswerGrid';
-import { Box, Button, Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
+import { ExpectValueResult } from 'application/query/model/ExpectValueResult';
 
 type Props = {
+  recommends: ExpectValueResult[];
+  selectedRecommend: null | ExpectValueResult;
+  onClickRecommend: (recommend: ExpectValueResult) => void;
+  onSubmit: () => void;
   answerGridProps: ComponentProps<typeof AnswerGrid>;
 };
 const NormalPageView: VFC<Props> = (props) => {
@@ -17,6 +22,7 @@ const NormalPageView: VFC<Props> = (props) => {
 };
 const AnswerContainer: VFC<Props> = ({ answerGridProps }) => {
   const { results, rowProps, cellOnClick } = answerGridProps;
+  // NOTE: 0~5, 6~10 に分割
   return (
     <Grid container spacing={1} justifyContent={'center'}>
       <Grid item xs={5}>
@@ -43,7 +49,12 @@ const AnswerContainer: VFC<Props> = ({ answerGridProps }) => {
     </Grid>
   );
 };
-const RecommendContainer: VFC<Props> = () => {
+const RecommendContainer: VFC<Props> = ({
+  recommends,
+  selectedRecommend,
+  onClickRecommend,
+  onSubmit,
+}) => {
   return (
     <Grid
       className={Style.recommend}
@@ -52,10 +63,28 @@ const RecommendContainer: VFC<Props> = () => {
       justifyContent={'space-between'}
     >
       <Grid item xs={11} overflow={'auto'}>
-        Panels
+        {recommends.map((recommend) => (
+          <Button
+            key={recommend.pokemon.no}
+            onClick={() => onClickRecommend(recommend)}
+            title={`EV: ${recommend.ev}`}
+            variant={
+              recommend.pokemon.no === selectedRecommend?.pokemon.no
+                ? 'outlined'
+                : 'text'
+            }
+          >
+            {recommend.pokemon.name}
+          </Button>
+        ))}
       </Grid>
       <Grid item xs={1} textAlign={'center'}>
-        <Button variant={'contained'} size={'large'}>
+        <Button
+          disabled={selectedRecommend === null}
+          onClick={onSubmit}
+          variant={'contained'}
+          size={'large'}
+        >
           決定
         </Button>
       </Grid>
