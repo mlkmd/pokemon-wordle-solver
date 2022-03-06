@@ -5,14 +5,9 @@ import {
   SolveResult,
 } from 'application/query/model/SolveResult';
 import { serializeCharacterStatuses } from 'application/query/value/CharacterStatus';
-import { ExpectedValue } from 'domain/value/ExpectedValue';
 import { PokemonName } from 'domain/value/PokemonName';
+import { ExpectValueResult } from 'application/query/model/ExpectValueResult';
 
-export type ExpectValueResult = {
-  pokemon: Pokemon;
-  ev: ExpectedValue;
-  possible: boolean;
-};
 /**
  * 全ポケモン選択時の期待値計算
  * @param list
