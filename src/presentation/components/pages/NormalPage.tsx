@@ -4,44 +4,49 @@ import NormalPageView from 'presentation/components/pages/NormalPageView';
 import { useEffect, useState } from 'react';
 import { SolveResult } from 'application/query/model/SolveResult';
 import { ExpectValueResult } from 'application/query/model/ExpectValueResult';
-import { calcAllExpectValues } from 'application/service/SolveService';
-import { getTargetPokemonList } from 'domain/model/Pokemon';
 import {
   GEN_DIAMOND_PEARL,
   GEN_GOLD_SILVER,
   GEN_RED_GREEN,
   GEN_RUBY_SAPPHIRE,
+  Generation,
 } from 'domain/value/Generation';
 import { TARGET_NAME_LEN } from 'constants/config';
 import {
   characterStatuses,
   UNUSED,
 } from 'application/query/value/CharacterStatus';
+import { useThrottle } from '@react-hook/throttle';
+import { fetchCalculateResult } from 'infrastructure/api/controller/CalculateController';
 
 const MAX_CELL_SIZE = 35;
 
 type Props = {};
 const NormalPage: NextPage<Props> = (props) => {
-  const [cellSize, setCellSize] = useState(MAX_CELL_SIZE);
+  const [cellSize, setCellSize] = useThrottle(MAX_CELL_SIZE);
   const [results, setResults] = useState<SolveResult[]>([]);
   const [recommends, setRecommends] = useState<ExpectValueResult[]>([]);
   const [selectedRecommend, setSelectedRecommend] =
     useState<null | ExpectValueResult>(null);
+  const generations: Generation[] = [
+    GEN_RED_GREEN,
+    GEN_GOLD_SILVER,
+    GEN_RUBY_SAPPHIRE,
+    GEN_DIAMOND_PEARL,
+  ];
 
   useEffect(() => {
-    const newRecommends = calcAllExpectValues(
-      getTargetPokemonList({
-        generations: [
-          GEN_RED_GREEN,
-          GEN_GOLD_SILVER,
-          GEN_RUBY_SAPPHIRE,
-          GEN_DIAMOND_PEARL,
-        ],
-      }),
-      results.map((result) => result.input),
-      results
-    );
-    setRecommends(newRecommends);
+    console.count('cellSize');
+  }, [cellSize]);
+
+  useEffect(() => {
+    fetchCalculateResult({
+      generations,
+      usedNames: results.map((result) => result.input),
+      results,
+    }).then((resp) => {
+      setRecommends(resp.expectValues);
+    });
   }, [results]);
 
   useEffect(() => {
@@ -62,7 +67,7 @@ const NormalPage: NextPage<Props> = (props) => {
     setResults(
       results.map((result, i) =>
         i !== resultIndex
-          ? { ...result }
+          ? result
           : {
               ...result,
               statuses: result.statuses.map((status, j) =>
