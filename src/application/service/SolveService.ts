@@ -28,7 +28,6 @@ export const calcAllExpectValues = (
   const possibleList = list.filter((pokemon) =>
     results.every((result) => matchAnswerResult(pokemon.name, result))
   );
-  console.log(possibleList.length + '/' + usableList.length);
   const possibleNameList = possibleList.map((v) => v.name);
   const evResults = usableList.map<ExpectValueResult>((pokemon) => {
     const size = possibleList.length;

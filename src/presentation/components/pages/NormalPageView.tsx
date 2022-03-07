@@ -2,13 +2,14 @@ import Style from 'presentation/components/pages/NormalPageView.module.scss';
 import WidthManager from 'presentation/components/atoms/WidthManager';
 import { ComponentProps, VFC } from 'react';
 import AnswerGrid from 'presentation/components/organisms/AnswerGrid';
-import { Button, Grid } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { ExpectValueResult } from 'application/query/model/ExpectValueResult';
 
 type Props = {
   recommends: ExpectValueResult[];
   selectedRecommend: null | ExpectValueResult;
   onClickRecommend: (recommend: ExpectValueResult) => void;
+  onClear: () => void;
   onSubmit: () => void;
   answerGridProps: ComponentProps<typeof AnswerGrid>;
 };
@@ -16,6 +17,7 @@ const NormalPageView: VFC<Props> = (props) => {
   return (
     <WidthManager className={Style.container}>
       <AnswerContainer {...props} />
+      <ButtonsContainer {...props} />
       <RecommendContainer {...props} />
     </WidthManager>
   );
@@ -49,6 +51,15 @@ const AnswerContainer: VFC<Props> = ({ answerGridProps }) => {
     </Grid>
   );
 };
+const ButtonsContainer: VFC<Props> = ({ onClear }) => {
+  return (
+    <Box textAlign={'center'} marginTop={'2rem'}>
+      <Button onClick={onClear} variant={'contained'} size={'large'}>
+        クリア
+      </Button>
+    </Box>
+  );
+};
 const RecommendContainer: VFC<Props> = ({
   recommends,
   selectedRecommend,
@@ -56,13 +67,18 @@ const RecommendContainer: VFC<Props> = ({
   onSubmit,
 }) => {
   return (
-    <Grid
-      className={Style.recommend}
-      container
-      direction={'column'}
-      justifyContent={'space-between'}
-    >
-      <Grid item xs={11} overflow={'auto'}>
+    <Box className={Style.recommend}>
+      <Box textAlign={'center'}>
+        <Button
+          disabled={selectedRecommend === null}
+          onClick={onSubmit}
+          variant={'contained'}
+          size={'large'}
+        >
+          決定
+        </Button>
+      </Box>
+      <Box marginTop={'0.5rem'}>
         {recommends.map((recommend) => (
           <Button
             key={recommend.pokemon.no}
@@ -77,18 +93,8 @@ const RecommendContainer: VFC<Props> = ({
             {recommend.pokemon.name}
           </Button>
         ))}
-      </Grid>
-      <Grid item xs={1} textAlign={'center'}>
-        <Button
-          disabled={selectedRecommend === null}
-          onClick={onSubmit}
-          variant={'contained'}
-          size={'large'}
-        >
-          決定
-        </Button>
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 };
 export default NormalPageView;
