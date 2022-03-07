@@ -78,7 +78,7 @@ const RecommendContainer: VFC<Props> = ({
           決定
         </Button>
       </Box>
-      <Box marginTop={'0.5rem'}>
+      <Box marginTop={'0.5rem'} textAlign={'center'}>
         {recommends.map((recommend) => (
           <Button
             key={recommend.pokemon.no}
