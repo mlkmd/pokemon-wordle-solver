@@ -83,6 +83,10 @@ const NormalPage: NextPage<Props> = (props) => {
     );
   };
 
+  const clearHandler = () => {
+    setResults([]);
+  };
+
   const submitHandler = () => {
     if (selectedRecommend === null) return;
     setResults([
@@ -101,6 +105,7 @@ const NormalPage: NextPage<Props> = (props) => {
         recommends={recommends}
         selectedRecommend={selectedRecommend}
         onClickRecommend={setSelectedRecommend}
+        onClear={clearHandler}
         onSubmit={submitHandler}
         answerGridProps={{
           results,

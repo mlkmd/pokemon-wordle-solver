@@ -3,9 +3,11 @@
 }
 
 .recommend {
-  height: 500px;
-  width: 100%;
+  height: 400px;
+  width: calc(100% - 32px);
+  border-radius: 6px;
   border: 1px solid #999;
-  margin-top: 40px;
+  margin: 2rem auto 0;
   padding: 8px;
+  overflow-y: auto;
 }
