@@ -1,15 +1,13 @@
 import { NextPage } from 'next';
 import AppLayout from 'presentation/components/layouts/AppLayout';
 import NormalPageView from 'presentation/components/pages/NormalPageView';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SolveResult } from 'application/query/model/SolveResult';
 import { ExpectValueResult } from 'application/query/model/ExpectValueResult';
 import {
   GEN_DIAMOND_PEARL,
-  GEN_GOLD_SILVER,
-  GEN_RED_GREEN,
-  GEN_RUBY_SAPPHIRE,
   Generation,
+  getGenerationsUntil,
 } from 'domain/value/Generation';
 import { TARGET_NAME_LEN } from 'constants/config';
 import {
@@ -28,12 +26,10 @@ const NormalPage: NextPage<Props> = (props) => {
   const [recommends, setRecommends] = useState<ExpectValueResult[]>([]);
   const [selectedRecommend, setSelectedRecommend] =
     useState<null | ExpectValueResult>(null);
-  const generations: Generation[] = [
-    GEN_RED_GREEN,
-    GEN_GOLD_SILVER,
-    GEN_RUBY_SAPPHIRE,
-    GEN_DIAMOND_PEARL,
-  ];
+  const [generation, setGeneration] = useState<Generation>(GEN_DIAMOND_PEARL);
+  const generations = useMemo<Generation[]>(() => {
+    return getGenerationsUntil(generation);
+  }, [generation]);
 
   useEffect(() => {
     console.count('cellSize');
@@ -47,7 +43,7 @@ const NormalPage: NextPage<Props> = (props) => {
     }).then((resp) => {
       setRecommends(resp.expectValues);
     });
-  }, [results]);
+  }, [generations, results]);
 
   useEffect(() => {
     const listener = () => {
@@ -102,10 +98,12 @@ const NormalPage: NextPage<Props> = (props) => {
   return (
     <AppLayout pageTitle={'通常モード'}>
       <NormalPageView
+        generation={generation}
+        onChangeGeneration={setGeneration}
+        onClear={clearHandler}
         recommends={recommends}
         selectedRecommend={selectedRecommend}
         onClickRecommend={setSelectedRecommend}
-        onClear={clearHandler}
         onSubmit={submitHandler}
         answerGridProps={{
           results,

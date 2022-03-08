@@ -4,12 +4,16 @@ import { ComponentProps, VFC } from 'react';
 import AnswerGrid from 'presentation/components/organisms/AnswerGrid';
 import { Box, Button, Grid } from '@mui/material';
 import { ExpectValueResult } from 'application/query/model/ExpectValueResult';
+import { Generation } from 'domain/value/Generation';
+import GenerationSelector from 'presentation/components/atoms/GenerationSelector';
 
 type Props = {
+  generation: Generation;
+  onChangeGeneration: (generation: Generation) => void;
+  onClear: () => void;
   recommends: ExpectValueResult[];
   selectedRecommend: null | ExpectValueResult;
   onClickRecommend: (recommend: ExpectValueResult) => void;
-  onClear: () => void;
   onSubmit: () => void;
   answerGridProps: ComponentProps<typeof AnswerGrid>;
 };
@@ -53,13 +57,31 @@ const AnswerContainer: VFC<Props> = ({ answerGridProps }) => {
     </Grid>
   );
 };
-const ButtonsContainer: VFC<Props> = ({ onClear }) => {
+const ButtonsContainer: VFC<Props> = ({
+  generation,
+  onChangeGeneration,
+  onClear,
+}) => {
   return (
-    <Box textAlign={'center'} marginTop={'2rem'}>
-      <Button onClick={onClear} variant={'contained'} size={'large'}>
-        クリア
-      </Button>
-    </Box>
+    <Grid
+      container
+      justifyContent={'space-between'}
+      gap={4}
+      marginTop={'2rem'}
+      paddingX={'2rem'}
+    >
+      <Grid item>
+        <GenerationSelector
+          generation={generation}
+          onChange={onChangeGeneration}
+        />
+      </Grid>
+      <Grid item>
+        <Button onClick={onClear} variant={'contained'} size={'large'}>
+          クリア
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 const RecommendContainer: VFC<Props> = ({
