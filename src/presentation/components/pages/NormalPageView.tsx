@@ -22,6 +22,8 @@ const NormalPageView: VFC<Props> = (props) => {
     </WidthManager>
   );
 };
+export default NormalPageView;
+
 const AnswerContainer: VFC<Props> = ({ answerGridProps }) => {
   const { results, rowProps, cellOnClick } = answerGridProps;
   // NOTE: 0~5, 6~10 に分割
@@ -97,4 +99,3 @@ const RecommendContainer: VFC<Props> = ({
     </Box>
   );
 };
-export default NormalPageView;
