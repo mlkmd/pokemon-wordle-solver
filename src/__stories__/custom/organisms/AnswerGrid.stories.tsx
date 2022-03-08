@@ -6,7 +6,7 @@ import clickCheckFunction from 'lib/functions/clickCheckFunction';
 import { SolveResult } from 'application/query/model/SolveResult';
 
 export default {
-  title: 'custom/atoms/AnswerGrid',
+  title: 'custom/organisms/AnswerGrid',
   component: AnswerGrid,
 } as ComponentMeta<typeof AnswerGrid>;
 
