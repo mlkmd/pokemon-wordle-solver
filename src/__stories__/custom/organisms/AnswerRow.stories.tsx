@@ -5,7 +5,7 @@ import AnswerRow from 'presentation/components/organisms/AnswerRow';
 import clickCheckFunction from 'lib/functions/clickCheckFunction';
 
 export default {
-  title: 'custom/atoms/AnswerRow',
+  title: 'custom/organisms/AnswerRow',
   component: AnswerRow,
 } as ComponentMeta<typeof AnswerRow>;
 

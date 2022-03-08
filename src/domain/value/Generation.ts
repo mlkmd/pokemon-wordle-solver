@@ -30,3 +30,10 @@ export const generations = [
  * 世代
  */
 export type Generation = typeof generations[number];
+
+/**
+ * 指定世代までの世代一覧を取得する
+ * @param generation
+ */
+export const getGenerationsUntil = (generation: Generation): Generation[] =>
+  generations.slice(0, generations.findIndex((v) => v === generation) + 1);
