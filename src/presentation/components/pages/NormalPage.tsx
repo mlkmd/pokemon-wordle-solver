@@ -32,10 +32,6 @@ const NormalPage: NextPage<Props> = (props) => {
   }, [generation]);
 
   useEffect(() => {
-    console.count('cellSize');
-  }, [cellSize]);
-
-  useEffect(() => {
     fetchCalculateResult({
       generations,
       usedNames: results.map((result) => result.input),
