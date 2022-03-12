@@ -6,7 +6,6 @@ import { apiConnection } from 'infrastructure/api/ApiConnector';
  * @param req
  */
 export const fetchCalculateResult = async (req: CalculateRequest) => {
-  console.log(req);
   const resp = await apiConnection.post<CalculateResponse>(
     `/api/calculate/`,
     req
