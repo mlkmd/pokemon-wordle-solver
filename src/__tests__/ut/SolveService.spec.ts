@@ -1,6 +1,43 @@
-import { calcAllExpectValues } from 'application/service/SolveService';
+import { calcAllExpectValues, solve } from 'application/service/SolveService';
 import { BLOW, HIT, UNUSED } from 'application/query/value/CharacterStatus';
 import { GEN_RED_GREEN } from 'domain/value/Generation';
+
+describe('solve test', () => {
+  test('hit test', () => {
+    const ans = solve('フタチマル', 'フーディン');
+    expect(ans.statuses).toEqual([HIT, UNUSED, UNUSED, UNUSED, UNUSED]);
+  });
+
+  test('blow test', () => {
+    const ans = solve('フタチマル', 'ベイリーフ');
+    expect(ans.statuses).toEqual([BLOW, UNUSED, UNUSED, UNUSED, UNUSED]);
+  });
+
+  test('duplicated test - 2 input 1 hit', () => {
+    const ans = solve('ドーミラー', 'ワンリキー');
+    expect(ans.statuses).toEqual([UNUSED, UNUSED, UNUSED, UNUSED, HIT]);
+  });
+
+  test('duplicated test - 2 input 2 hit', () => {
+    const ans = solve('ドーミラー', 'ゴーリキー');
+    expect(ans.statuses).toEqual([UNUSED, HIT, UNUSED, UNUSED, HIT]);
+  });
+
+  test('duplicated test - 2 input 1 hit 1 blow', () => {
+    const ans = solve('ドーミラー', 'フリーザー');
+    expect(ans.statuses).toEqual([UNUSED, BLOW, UNUSED, UNUSED, HIT]);
+  });
+
+  test('duplicated test - 2 input 1 hit', () => {
+    const ans = solve('ドーミラー', 'ワンリキー');
+    expect(ans.statuses).toEqual([UNUSED, UNUSED, UNUSED, UNUSED, HIT]);
+  });
+
+  test('duplicated test - 2 input 1 blow (prioritize first character)', () => {
+    const ans = solve('ドーミラー', 'サンダース');
+    expect(ans.statuses).toEqual([UNUSED, BLOW, UNUSED, UNUSED, UNUSED]);
+  });
+});
 
 describe('calculate test', () => {
   test('hit test', () => {
