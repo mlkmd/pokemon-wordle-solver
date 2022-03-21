@@ -1,6 +1,6 @@
 import { ComponentProps, FC } from 'react';
 import { useRouter } from 'next/router';
-import { faviconPath, topPagePath } from 'presentation/constants/path';
+import { faviconPath, topPagePath } from 'application/constants/path';
 import AppLayoutView from 'presentation/components/layouts/AppLayoutView';
 import Head from 'next/head';
 

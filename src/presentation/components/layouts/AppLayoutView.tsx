@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Head from 'next/head';
 import Header from 'presentation/components/templates/Header';
-import { faviconPath } from 'presentation/constants/path';
+import { faviconPath } from 'application/constants/path';
 
 type Props = {
   /** ページタイトル（title 及び h2） */

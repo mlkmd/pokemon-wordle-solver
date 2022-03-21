@@ -3,7 +3,7 @@ import AppLayout from 'presentation/components/layouts/AppLayout';
 import TopPageView from 'presentation/components/pages/TopPageView';
 import { ComponentProps } from 'react';
 import { useRouter } from 'next/router';
-import { challengePagePath, normalPagePath } from 'presentation/constants/path';
+import { challengePagePath, normalPagePath } from 'application/constants/path';
 
 type Props = Omit<
   ComponentProps<typeof TopPageView>,
