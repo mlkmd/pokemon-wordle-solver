@@ -1,5 +1,6 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import TopPage from 'presentation/components/pages/TopPage';
+import UnreachableError from 'lib/exceptions/UnreachableError';
 
 // 参考: next/router の mock
 // @see https://blog.shinki.net/posts/jest-next-router-mock
@@ -30,7 +31,7 @@ describe('トップ画面', () => {
       const { container } = render(<TopPage />);
       const homeIcon = container.querySelector('[data-testid="HomeIcon"]');
       expect(homeIcon).not.toBeNull();
-      if (!homeIcon) throw new Error();
+      if (!homeIcon) throw new UnreachableError();
       fireEvent.click(homeIcon);
       expect(pushMock).toHaveBeenCalledWith('/');
       expect(pushMock).toHaveBeenCalledTimes(1);
