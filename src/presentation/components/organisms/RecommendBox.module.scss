@@ -19,10 +19,14 @@
     }
   }
 
+  &[data-selected="true"] {
+    border-color: var.$color-selected-border;
+  }
+
   .ev {
     position: absolute;
     bottom: 4px;
     right: 4px;
-    font-size: 0.5em;
+    font-size: 0.75em;
   }
 }

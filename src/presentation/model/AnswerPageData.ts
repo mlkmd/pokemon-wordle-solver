@@ -5,11 +5,14 @@ import AnswerGrid from 'presentation/components/organisms/AnswerGrid';
 
 export type AnswerPageData = {
   generation: Generation;
-  onChangeGeneration: (generation: Generation) => void;
-  onClear: () => void;
+  answerGridProps: ComponentProps<typeof AnswerGrid>;
+  usedNames?: string[];
   recommends: ExpectValueResult[];
   selectedRecommend: null | ExpectValueResult;
+  onChangeGeneration: (generation: Generation) => void;
   onClickRecommend: (recommend: ExpectValueResult) => void;
   onSubmit: () => void;
-  answerGridProps: ComponentProps<typeof AnswerGrid>;
+  onClickNextButton?: () => void;
+  onClear: () => void;
+  onClearAll?: () => void;
 };

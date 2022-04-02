@@ -1,7 +1,17 @@
+.box {
+  margin-top: 16px;
+
+  .buttons {
+    margin-top: 32px;
+    display: grid;
+    gap: 16px;
+    justify-content: center;
+    grid-auto-flow: column;
+  }
+}
 
 .recommend {
   height: 400px;
-  width: calc(100% - 32px);
   border-radius: 6px;
   border: 1px solid #999;
   margin: 2rem auto 0;
@@ -14,14 +24,6 @@
     grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
     margin-top: 8px;
   }
-}
-
-.nextButton {
-  float: left;
-}
-
-.clearAllButton {
-  float: right;
 }
 
 .usedNamesContainer {
