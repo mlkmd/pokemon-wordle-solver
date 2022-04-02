@@ -1,7 +1,8 @@
 import Style from 'presentation/components/templates/AnswerPageRecommendContainer.module.scss';
 import { VFC } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { AnswerPageData } from 'presentation/model/AnswerPageData';
+import RecommendBox from 'presentation/components/organisms/RecommendBox';
 
 type Props = AnswerPageData & {
   usedNames?: string[];
@@ -49,20 +50,13 @@ const AnswerPageRecommendContainer: VFC<Props> = ({
           </Button>
         )}
       </Box>
-      <Box marginTop={'0.5rem'} textAlign={'center'}>
+      <Box className={Style.grid}>
         {recommends.map((recommend) => (
-          <Button
+          <RecommendBox
             key={recommend.pokemon.no}
+            evResult={recommend}
             onClick={() => onClickRecommend(recommend)}
-            title={`EV: ${recommend.ev}`}
-            variant={
-              recommend.pokemon.no === selectedRecommend?.pokemon.no
-                ? 'outlined'
-                : 'text'
-            }
-          >
-            {recommend.pokemon.name}
-          </Button>
+          />
         ))}
         {typeof usedNames !== 'undefined' && (
           <Box className={Style.usedNamesContainer}>

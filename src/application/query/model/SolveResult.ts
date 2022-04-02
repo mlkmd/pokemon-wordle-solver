@@ -22,44 +22,6 @@ export interface SolveResult {
   statuses: CharacterStatus[];
 }
 
-/**
- * 入力ポケモン名と正解ポケモン名から回答結果を算出
- * @param input
- * @param answer
- */
-export const solve = (input: PokemonName, answer: PokemonName): SolveResult => {
-  // HIT している場所に HIT、それ以外の場所に UNUSED を設定
-  const statuses = [...new Array(TARGET_NAME_LEN)].map<CharacterStatus>(
-    (_, index) => (input.charAt(index) === answer.charAt(index) ? HIT : UNUSED)
-  );
-
-  // 正解文字列の中で HIT でない文字の個数を算出
-  const blowCountMap = new Map<string, number>();
-  statuses.forEach((status, index) => {
-    if (status !== HIT) {
-      blowCountMap.set(
-        answer.charAt(index),
-        (blowCountMap.get(answer.charAt(index)) || 0) + 1
-      );
-    }
-  });
-
-  // 正解の文字列と一致する文字を BLOW に置換（複数個存在する場合は左側の文字が優先）
-  for (let index = 0; index < TARGET_NAME_LEN; index++) {
-    if (statuses[index] === HIT) continue;
-    const character = input.charAt(index);
-    if (!blowCountMap.has(character)) continue;
-    if ((blowCountMap.get(character) || 0) <= 0) continue;
-    statuses[index] = BLOW;
-    blowCountMap.set(character, (blowCountMap.get(character) || 1) - 1);
-  }
-
-  return {
-    input,
-    statuses,
-  };
-};
-
 class MatchCondition {
   private readonly character: string;
 
