@@ -7,8 +7,8 @@ import RecommendBox from 'presentation/components/organisms/RecommendBox';
 type Props = AnswerPageData;
 const AnswerPageRecommendContainer: VFC<Props> = ({
   recommends,
+  selectedRecommend,
   onClickRecommend,
-  usedNames,
 }) => {
   return (
     <Box className={Style.recommend}>
@@ -18,15 +18,10 @@ const AnswerPageRecommendContainer: VFC<Props> = ({
           <RecommendBox
             key={recommend.pokemon.no}
             evResult={recommend}
+            selected={recommend.pokemon.no === selectedRecommend?.pokemon.no}
             onClick={() => onClickRecommend(recommend)}
           />
         ))}
-        {typeof usedNames !== 'undefined' && (
-          <Box className={Style.usedNamesContainer}>
-            <Box>入力済み</Box>
-            {usedNames.join('、')}
-          </Box>
-        )}
       </Box>
     </Box>
   );
